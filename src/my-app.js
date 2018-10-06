@@ -20,7 +20,6 @@ import '@polymer/app-route/app-location.js';
 import '@polymer/app-route/app-route.js';
 import '@polymer/iron-pages/iron-pages.js';
 import '@polymer/iron-selector/iron-selector.js';
-import '@polymer/paper-icon-button/paper-icon-button.js';
 import './my-icons.js';
 
 // Gesture events like tap and track generated from touch will not be
@@ -47,8 +46,8 @@ class MyApp extends PolymerElement {
         }
 
         app-header {
-          color: #fff;
-          background-color: var(--app-primary-color);
+          color: black;
+          background-color: white;
         }
 
         app-header paper-icon-button {
@@ -79,7 +78,7 @@ class MyApp extends PolymerElement {
       <app-route route="{{route}}" pattern="[[rootPath]]:page" data="{{routeData}}" tail="{{subroute}}">
       </app-route>
 
-      <app-drawer-layout fullbleed="" narrow="{{narrow}}">
+      <app-drawer-layout fullbleed="" force-narrow narrow="{{narrow}}">
         <!-- Drawer content -->
         <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
           <app-toolbar>Menu</app-toolbar>
@@ -94,9 +93,9 @@ class MyApp extends PolymerElement {
         <app-header-layout has-scrolling-region="">
 
           <app-header slot="header" condenses="" reveals="" effects="waterfall">
-            <app-toolbar>
-              <paper-icon-button icon="my-icons:menu" drawer-toggle=""></paper-icon-button>
-              <div main-title="">My App</div>
+            <app-toolbar class="content">
+              <!--<paper-icon-button icon="my-icons:menu" drawer-toggle=""></paper-icon-button>
+              <div main-title="">My App</div>-->
             </app-toolbar>
           </app-header>
 

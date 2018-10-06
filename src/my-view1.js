@@ -10,24 +10,78 @@
 
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import './shared-styles.js';
+import './article-item.js';
+import '@polymer/iron-image/iron-image.js';
 
 class MyView1 extends PolymerElement {
   static get template() {
     return html`
-      <style include="shared-styles">
+      <style include="shared-styles article-item">
         :host {
           display: block;
-
-          padding: 10px;
         }
+        app-hero{
+          margin-bottom: 50px;
+          min-height: 350px;
+          background-color: #eee;
+          width: 100%;
+          display: block;
+          border-radius: 10px;
+          box-shadow: 0px 22px 50px -24px rgba(0,0,0,0.6);
+        }
+        .grid{
+          display: grid;
+        }
+        .grid--three{
+          grid-template-columns: repeat(3,1fr);
+          grid-gap: 16px;
+        }
+        
+        .article-item--footer{
+          display: flex;
+        }
+        .flex{
+          flex: 1;
+        }
+        
       </style>
 
-      <div class="card">
-        <div class="circle">1</div>
-        <h1>View One</h1>
-        <p>Ut labores minimum atomorum pro. Laudem tibique ut has.</p>
-        <p>Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Cu mei vide viris gloriatur, at populo eripuit sit.</p>
-      </div>
+      <app-hero class="content">
+        <div class="carousel">
+        
+        </div>
+      </app-hero>
+      <section class="article-section content">
+        <header>
+          <h1>Featured</h1>
+        </header>
+        <article-listing class="grid grid--three">
+          <article-item>
+            <article-figure>
+              <a href="http://litmotion.net/demo/neori/vestibulum-vitae-leo-ut-lacus-ullamcorper-sollicitudin-sed/">
+                <iron-image 
+                  sizing="cover" 
+                  preload 
+                  src="http://litmotion.net/demo/neori/wp-content/uploads/2018/03/world4-comprezor-768x1055.jpg"></iron-image>
+              </a>
+            </article-figure>
+            <a href="/cool-post">
+              <h1 class="article-item--title">In ultricies nunc ut mi finibus congue porttitor vec</h1>
+            </a>
+            <p class="article-item--excerpt">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut viverra nisl rutrum, pretium lectus nec, sagittis dolor....</p>
+            <footer class="article-item--footer">
+              <div class="article-author--avatar">
+                <img src="https://pbs.twimg.com/profile_images/972460944994418688/zipc-DNs_400x400.jpg"> 
+              </div>
+              <a href="#">
+                <span class="article-autor--author">Lora</span>
+              </a>
+              <span class="flex"></span>
+              <span class="article-item--date">January 28, 2018</span>
+            </footer>
+          </article-item>
+        </article-listing>
+      </section>
     `;
   }
 }

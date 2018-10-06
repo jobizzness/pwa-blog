@@ -18,6 +18,7 @@ $_documentContainer.innerHTML = //html
             article-item{
               display: block;
               padding: 16px;
+              position: relative;
             }
             article-item article-figure{
               display: block;
@@ -46,6 +47,7 @@ $_documentContainer.innerHTML = //html
               height: 30px;
               width: 30px;
               overflow: hidden;
+              background-color: #eee;
               margin-right: 8px;
             }
             article-item .article-author--avatar img{
@@ -53,6 +55,22 @@ $_documentContainer.innerHTML = //html
             }
             article-item .article-autor--author{
               font-weight: 500;
+            }
+            .article-item--footer{
+              display: flex;
+            }
+            article-item[image-only] .article-item--excerpt{
+              display: none;
+            }
+            article-item[image-only] article-figure{
+              height: 300px;
+            }
+            article-info{
+              position: absolute;
+              bottom: 23px;
+              color: #ffffffd9;
+              padding: 1em;
+              width: calc(100% - 65px);
             }
         </style>
       </template>

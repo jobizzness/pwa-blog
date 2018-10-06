@@ -20,6 +20,7 @@ import '@polymer/app-route/app-location.js';
 import '@polymer/app-route/app-route.js';
 import '@polymer/iron-pages/iron-pages.js';
 import '@polymer/iron-selector/iron-selector.js';
+import '@polymer/iron-ajax/iron-ajax.js';
 import './my-icons.js';
 
 // Gesture events like tap and track generated from touch will not be
@@ -72,6 +73,14 @@ class MyApp extends PolymerElement {
         }
       </style>
 
+      <iron-ajax
+        auto
+        url="[[endpoint]]"
+        last-response="{{data}}"
+        handle-as="json"
+        debounce-duration="300">
+    </iron-ajax>
+
       <app-location route="{{route}}" url-space-regex="^[[rootPath]]">
       </app-location>
 
@@ -100,7 +109,7 @@ class MyApp extends PolymerElement {
           </app-header>
 
           <iron-pages selected="[[page]]" attr-for-selected="name" role="main">
-            <my-view1 name="view1"></my-view1>
+            <my-view1 name="view1" latest-articles="[[latestArticles]]"></my-view1>
             <my-view2 name="view2"></my-view2>
             <my-view3 name="view3"></my-view3>
             <my-view404 name="view404"></my-view404>
@@ -118,13 +127,18 @@ class MyApp extends PolymerElement {
         observer: '_pageChanged'
       },
       routeData: Object,
-      subroute: Object
+      subroute: Object,
+      endpoint: {
+        type: String,
+        value: 'http://localhost:3300'
+      }
     };
   }
 
   static get observers() {
     return [
-      '_routePageChanged(routeData.page)'
+      '_routePageChanged(routeData.page)',
+      '_dataChanged(data)'
     ];
   }
 
@@ -145,6 +159,25 @@ class MyApp extends PolymerElement {
     if (!this.$.drawer.persistent) {
       this.$.drawer.close();
     }
+  }
+
+  ready(){
+    super.ready();
+
+  }
+
+  _dataChanged(data){
+    if (!data && !data.rss.channel) return;
+      
+    let channel = data.rss.channel
+    console.log(channel)
+    this._getLatest(channel.item)
+    
+    
+  }
+
+  _getLatest(items){
+    this.latestArticles = items.slice(0, 3)
   }
 
   _pageChanged(page) {

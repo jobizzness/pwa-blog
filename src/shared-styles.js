@@ -19,6 +19,9 @@ $_documentContainer.innerHTML = //html
         max-width: 1140px;
         margin: 0 auto;
       }
+      .flex{
+          flex: 1;
+      }
       a{
         text-decoration: none;
         color: inherit;

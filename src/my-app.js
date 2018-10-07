@@ -109,7 +109,10 @@ class MyApp extends PolymerElement {
           </app-header>
 
           <iron-pages selected="[[page]]" attr-for-selected="name" role="main">
-            <my-view1 name="view1" latest-articles="[[latestArticles]]"></my-view1>
+            <my-view1 
+              name="view1" 
+              latest-articles="[[latestArticles]]"
+              featured-articles="[[featuredArticles]]"></my-view1>
             <my-view2 name="view2"></my-view2>
             <my-view3 name="view3"></my-view3>
             <my-view404 name="view404"></my-view404>
@@ -138,7 +141,9 @@ class MyApp extends PolymerElement {
   static get observers() {
     return [
       '_routePageChanged(routeData.page)',
-      '_dataChanged(data)'
+      '_dataChanged(data)',
+      '_getFeatured(items.*, userReads)',
+      '_getLatest(items.*, featuredArticles)'
     ];
   }
 
@@ -167,17 +172,51 @@ class MyApp extends PolymerElement {
   }
 
   _dataChanged(data){
-    if (!data && !data.rss.channel) return;
+    if (!data || !data.rss.channel) return;
       
     let channel = data.rss.channel
-    console.log(channel)
-    this._getLatest(channel.item)
-    
-    
+    this.items = channel.item;
   }
 
-  _getLatest(items){
-    this.latestArticles = items.slice(0, 3)
+  _getLatest(items, featured = []){
+    if(!this.items) return;
+
+    //filter featured and and show remaining 6 ordered by date
+    let remainingItems = this.items.filter(item => !this._itemExits(item, featured));
+    this.latestArticles = remainingItems.slice(0, 6)
+  }
+
+  _itemExits(item, data = []) {
+    if (data) {
+      for (let i = 0; i < data.length; ++i) {
+        let entry = data[i];
+        if (item.title._text === entry.title._text) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
+  /**
+    * @desc Based on user reads, feature 4 posts
+    * @param items - the posts from our data
+    * @param userReads - the posts the user read, can be null
+    */
+  _getFeatured(items, userReads = []){
+    if(!this.items) return;
+    
+    let featured = []
+
+    if(userReads.length == 0){
+      //If user never read a story
+      //lets just show them the latest articles
+      featured = this.items.slice(0, 4);
+    }
+    
+    this.featuredArticles = featured;
+
   }
 
   _pageChanged(page) {

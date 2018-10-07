@@ -36,11 +36,17 @@ $_documentContainer.innerHTML = //html
               font-size: 16px;
               color: #555;
               line-height: 26px;
+              overflow: hidden;
+              height: 100px;
+              text-overflow: ellipsis;
             }
             article-item .article-item--title{
               font-weight: 400;
               font-size: 21px;
               line-height: 1.2;
+              height: 55px;
+              text-overflow: ellipsis;
+              overflow: hidden;
             }
             article-item .article-author--avatar{
               border-radius: 50%;
@@ -64,6 +70,9 @@ $_documentContainer.innerHTML = //html
             }
             article-item[image-only] article-figure{
               height: 300px;
+            }
+            article-item[image-only] .article-item--title{
+              height: auto;
             }
             article-info{
               position: absolute;

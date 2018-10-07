@@ -66,27 +66,27 @@ class MyView1 extends PolymerElement {
           <h1 class="section-heading">Featured Articles</h1>
         </header>
         <article-listing class="grid grid--two">
-          <template is="dom-repeat" items="[[featuredArticles]]">
+          <template is="dom-repeat" items="[[featuredArticles]]" as="article">
             <article-item image-only>
               <article-figure>
-                <a href="http://litmotion.net/demo/neori/vestibulum-vitae-leo-ut-lacus-ullamcorper-sollicitudin-sed/">
+                <a href$="[[_formatURL(article.link._text)]]">
                   <iron-image 
                     sizing="cover" 
                     preload 
-                    src="http://litmotion.net/demo/neori/wp-content/uploads/2018/03/world4-comprezor-768x1055.jpg"></iron-image>
+                    src="[[article.enclosure._attributes.url]]"></iron-image>
                 </a>
               </article-figure>
               <article-info>
-                <a href="/cool-post">
-                  <h1 class="article-item--title">In ultricies nunc ut mi finibus congue porttitor vec</h1>
+                <a href$="[[_formatURL(article.link._text)]]">
+                  <h1 class="article-item--title">[[article.title._text]]</h1>
                 </a>
                 <p class="article-item--excerpt">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut viverra nisl rutrum, pretium lectus nec, sagittis dolor....</p>
                 <footer class="article-item--footer">
                   <div class="article-author--avatar">
-                    <img src="https://pbs.twimg.com/profile_images/972460944994418688/zipc-DNs_400x400.jpg"> 
+                    <img src=""> 
                   </div>
-                  <a href="#">
-                    <span class="article-autor--author">Lora</span>
+                  <a href$="[[_formatURL(article.link._text)]]">
+                    <span class="article-autor--author">[[_formatAuthor(article)]]</span>
                   </a>
                   <span class="flex"></span>
                   <span class="article-item--date">January 28, 2018</span>
@@ -131,41 +131,6 @@ class MyView1 extends PolymerElement {
         </article-listing>
       </section>
 
-      <section class="article-section content">
-        <header class="section-header">
-          <h1 class="section-heading">Have you seen these?</h1>
-        </header>
-        <article-listing class="grid grid--three">
-          <template is="dom-repeat" items="[[recommendedArticles]]">
-            <article-item>
-              <article-figure>
-                <a href="http://litmotion.net/demo/neori/vestibulum-vitae-leo-ut-lacus-ullamcorper-sollicitudin-sed/">
-                  <iron-image 
-                    sizing="cover" 
-                    preload 
-                    src="http://litmotion.net/demo/neori/wp-content/uploads/2018/03/world4-comprezor-768x1055.jpg"></iron-image>
-                </a>
-              </article-figure>
-              <a href="/cool-post">
-                <h1 class="article-item--title">In ultricies nunc ut mi finibus congue porttitor vec</h1>
-              </a>
-              <p class="article-item--excerpt">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut viverra nisl rutrum, pretium lectus nec, sagittis dolor....</p>
-              <footer class="article-item--footer">
-                <div class="article-author--avatar">
-                  <img src=""> 
-                </div>
-                <a href="#">
-                  <span class="article-autor--author">Lora</span>
-                </a>
-                <span class="flex"></span>
-                <span class="article-item--date">January 28, 2018</span>
-              </footer>
-            </article-item>
-          </template>
-        </article-listing>
-      </section>
-
-
     `;
   }
 
@@ -173,16 +138,12 @@ class MyView1 extends PolymerElement {
     return{
       featuredArticles: {
         type: Array,
-        value: [{},{}, {}, {}]
+        value: []
       },
       latestArticles: {
         type: Array,
         value: [],
         observer: 'lastestChanged'
-      },
-      recommendedArticles: {
-        type: Array,
-        value: [{}, {}, {}]
       }
     }
   }
@@ -191,8 +152,10 @@ class MyView1 extends PolymerElement {
     console.log(data)
   }
 
+  
   _formatURL(link){
-    return link;
+    if(!link) return;
+    return link.replace("https://blogs.oracle.com", "/post");;
   }
 
   _formatAuthor(article){

@@ -12,11 +12,13 @@ import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import './shared-styles.js';
 import './article-item.js';
 import '@polymer/iron-image/iron-image.js';
+import './glide.js'
+import Glide from '@glidejs/glide'
 
 class MyView1 extends PolymerElement {
   static get template() {
     return html`
-      <style include="shared-styles article-item">
+      <style include="shared-styles article-item glide">
         :host {
           display: block;
         }
@@ -29,10 +31,17 @@ class MyView1 extends PolymerElement {
           box-shadow: 0px 22px 50px -24px rgba(0,0,0,0.6);
         }
         .carousel{
+          margin-top: 1em;
           margin-bottom: 3em;
           height: 100%;
           width: 100%;
           min-height: 350px;
+        }
+        .glide__slides{
+          height: 400px;
+        }
+        .glide__track{
+          height: 400px;
         }
         .grid{
           display: grid;
@@ -52,12 +61,47 @@ class MyView1 extends PolymerElement {
         .section-heading{
           font-size: 1.7rem;
           margin: 0;
+          font-weight: 500;
+        }
+        .section-subscribe{
+          min-height: 400px;
+          background: #7243ce;
+          background: linear-gradient(to right, #449bce 0%,#7243ce 100%);
+          margin-top: 3em;
+        }
+        .subscribe-inner{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+          padding: 5em 1em;
+        }
+        .subscribe-inner h1{
+          color: white;
+          font-size: 1.9rem;
+          margin: 0 16px;
+        }
+        .subscribe-inner p{
+          max-width: 450px;
+          color: white;
         }
       </style>
 
       <app-hero class="content">
         <div class="carousel">
-        
+          <div class="glide">
+            <div class="glide__track" data-glide-el="track">
+              <ul class="glide__slides">
+                <li class="glide__slide">0</li>
+                <li class="glide__slide">1</li>
+                <li class="glide__slide">2</li>
+              </ul>
+            </div>
+            <div class="glide__arrows" data-glide-el="controls">
+              <button class="glide__arrow glide__arrow--left" data-glide-dir="<">prev</button>
+              <button class="glide__arrow glide__arrow--right" data-glide-dir=">">next</button>
+            </div>
+          </div>
         </div>
       </app-hero>
 
@@ -130,7 +174,13 @@ class MyView1 extends PolymerElement {
           </template>
         </article-listing>
       </section>
-
+      
+      <section class="section-subscribe">
+        <div class="subscribe-inner">
+          <h1>Never miss a post!</h1>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut viverra nisl rutrum, pretium lectus nec, sagittis dolor....</p>
+        </div>
+      </section>
     `;
   }
 
@@ -150,6 +200,16 @@ class MyView1 extends PolymerElement {
 
   lastestChanged(data){
     console.log(data)
+  }
+  connectedCallback(){
+    super.connectedCallback()
+
+    new Glide(this.shadowRoot.querySelector('.glide'), {
+      type: 'carousel',
+      startAt: 0,
+      perView: 1,
+      autoplay: 2000
+    }).mount()
   }
 
   

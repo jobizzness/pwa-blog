@@ -14,6 +14,7 @@
     "test:integration": "polymer build # test that psk builds without error with the CLI"
   },
   "dependencies": {
+    "@glidejs/glide": "^3.2.3",
     "@polymer/app-layout": "^3.0.0-pre.15",
     "@polymer/app-route": "^3.0.0-pre.15",
     "@polymer/app-storage": "^3.0.2",

@@ -14,8 +14,9 @@ import './article-item.js';
 import '@polymer/iron-image/iron-image.js';
 import './glide.js'
 import Glide from '@glidejs/glide'
+import {PostBehavior} from './post-behavior.js';
 
-class MyView1 extends PolymerElement {
+class MyView1 extends PostBehavior(PolymerElement) {
   static get template() {
     return html`
       <style include="shared-styles article-item glide">
@@ -170,6 +171,12 @@ class MyView1 extends PolymerElement {
           }
           .grid--two{
             grid-template-columns: repeat(1,1fr);
+          }
+          .slider-slide--content{
+            max-width: 350px;
+          }
+          .overlay{
+            height: 195px;
           }
         }
       </style>
@@ -350,9 +357,7 @@ class MyView1 extends PolymerElement {
   }
 
 
-  lastestChanged(data){
-    console.log(data)
-  }
+  lastestChanged(data){}
 
   connectedCallback(){
     super.connectedCallback()
@@ -368,24 +373,13 @@ class MyView1 extends PolymerElement {
   _loaders(data) {
     return (!data || !data.length > 0) ? [{}, {}, {}, {}] : [];
   }
-
-  _formatDate(date){
-    console.log(date)
-    return date;
-  }
-  _formatURL(link){
-    if(!link) return;
-    return link.replace("https://blogs.oracle.com", "/post");
-  }
-
+  
   _selectArticle(e){
     let node = e.currentTarget;
 
     this.activePost = node.data;
   }
-  _formatAuthor(article){
-    return article['dc:creator'] && article['dc:creator']._text
-  }
+
 }
 
 window.customElements.define('my-view1', MyView1);

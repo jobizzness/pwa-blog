@@ -11,8 +11,9 @@
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-image/iron-image.js';
 import './shared-styles.js';
+import {PostBehavior} from './post-behavior.js';
 
-class MyView2 extends PolymerElement {
+class MyView2 extends PostBehavior(PolymerElement) {
 
   static get template() {
     return html`
@@ -84,7 +85,7 @@ class MyView2 extends PolymerElement {
                 <div class="content">
                     <div class="post-header">
                         <h1 class="post-title">[[data.title._text]]</h1>
-                        <time class="post-date">June 25, 2018</time>
+                        <time class="post-date">[[_formatDate(article.pubDate._text)]]</time>
                     </div>
                     <!-- we must trust this data coming in-->
                     <div class="post-content" inner-h-t-m-l="[[data.description._text]]">
@@ -122,7 +123,8 @@ class MyView2 extends PolymerElement {
     }
 
   _postChanged(newPost, oldPost){
-    console.log(newPost)
+    //scroll top
+    window.scrollTo(0, 0)
   }
 
 }

@@ -82,6 +82,65 @@ $_documentContainer.innerHTML = //html
               padding: 1em;
               width: calc(100% - 65px);
             }
+            @-webkit-keyframes placeHolderShimmer {
+              0% {
+                  background-position: -468px 0;
+              }
+
+              100% {
+                  background-position: 468px 0;
+              }
+              }
+
+              @keyframes placeHolderShimmer {
+              0% {
+                  background-position: -468px 0;
+              }
+
+              100% {
+                  background-position: 468px 0;
+              }
+          }
+          .placeholder-shimmer {
+            -webkit-animation-duration: 1s;
+                    animation-duration: 1s;
+            -webkit-animation-fill-mode: forwards;
+                    animation-fill-mode: forwards;
+            -webkit-animation-iteration-count: infinite;
+                    animation-iteration-count: infinite;
+            -webkit-animation-name: placeHolderShimmer;
+                    animation-name: placeHolderShimmer;
+            -webkit-animation-timing-function: linear;
+                    animation-timing-function: linear;
+            background: #f7f7f7;
+            background: -webkit-gradient(linear, left top, right top, color-stop(8%, #f7f7f7), color-stop(18%, #DEE3E5), color-stop(33%, #f7f7f7));
+            background: linear-gradient(to right, #f7f7f7 8%, #DEE3E5 18%, #f7f7f7 33%);
+            background-size: 900px 4px;
+            position: relative;
+            overflow: hidden;
+          }
+          .remi-product-item-placeholder{
+            padding: 1em;
+          }
+        .remi-product-item-placeholder--image{
+          background-color: #eee;
+          height: 300px;
+          width: 100%;
+        }
+
+        .remi-product-item-placeholder--title{
+          height: 14px;
+          width: 188px;
+        }
+
+        .remi-product-item-placeholder--price{
+          margin-top: 8px;
+          height: 14px;
+          width: 90px;
+        }
+        .remi-product-item-footer{
+          padding: 1em 0;
+        }
         </style>
       </template>
 </dom-module>`;

@@ -30,6 +30,20 @@ class MyView2 extends PolymerElement {
       </div>
     `;
   }
+
+  static get properties() {
+    return {
+      activePost: {
+        type: Object,
+        observer: '_postChanged'
+      }
+    }
+  }
+
+  _postChanged(newPost, oldPost){
+    console.log(newPost)
+  }
+
 }
 
 window.customElements.define('my-view2', MyView2);

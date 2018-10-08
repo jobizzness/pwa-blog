@@ -229,8 +229,17 @@ class MyView1 extends PolymerElement {
           <h1 class="section-heading">Featured Articles</h1>
         </header>
         <article-listing class="grid grid--two">
+          <template is="dom-repeat" items="[[_loaders(featuredArticles)]]">
+              <div class="remi-product-item-placeholder">
+                  <div class="remi-product-item-placeholder--image"></div>
+                  <div class="remi-product-item-footer pad">
+                      <div class="remi-product-item-placeholder--title placeholder-shimmer"></div>
+                      <div class="remi-product-item-placeholder--price placeholder-shimmer"></div>
+                  </div>
+              </div>
+          </template>
           <template is="dom-repeat" items="[[featuredArticles]]" as="article">
-            <article-item image-only>
+            <article-item image-only data="[[article]]" on-click="_selectArticle">
               <article-figure>
                 <a href$="[[_formatURL(article.link._text)]]">
                   <iron-image 
@@ -265,8 +274,17 @@ class MyView1 extends PolymerElement {
           <h1 class="section-heading">Happening Now</h1>
         </header>
         <article-listing class="grid grid--three">
+          <template is="dom-repeat" items="[[_loaders(latestArticles)]]">
+              <div class="remi-product-item-placeholder">
+                  <div class="remi-product-item-placeholder--image"></div>
+                  <div class="remi-product-item-footer pad">
+                      <div class="remi-product-item-placeholder--title placeholder-shimmer"></div>
+                      <div class="remi-product-item-placeholder--price placeholder-shimmer"></div>
+                  </div>
+              </div>
+          </template>
           <template is="dom-repeat" items="[[latestArticles]]" as="article">
-            <article-item>
+            <article-item data="[[article]]" on-click="_selectArticle">
               <article-figure>
                 <a href$="[[_formatURL(article.link._text)]]">
                   <iron-image 
@@ -321,6 +339,10 @@ class MyView1 extends PolymerElement {
         type: Array,
         value: [],
         observer: 'lastestChanged'
+      },
+      activePost: {
+        type: Object,
+        notify: true
       }
     }
   }
@@ -339,12 +361,21 @@ class MyView1 extends PolymerElement {
     }).mount()
   }
 
+  _loaders(data) {
+    return (!data || !data.length > 0) ? [{}, {}, {}, {}] : [];
+  }
+
   
   _formatURL(link){
     if(!link) return;
     return link.replace("https://blogs.oracle.com", "/post");;
   }
 
+  _selectArticle(e){
+    let node = e.currentTarget;
+
+    this.activePost = node.data;
+  }
   _formatAuthor(article){
     return article['dc:creator'] && article['dc:creator']._text
   }

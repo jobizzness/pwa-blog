@@ -21,6 +21,7 @@ import '@polymer/app-route/app-route.js';
 import '@polymer/iron-pages/iron-pages.js';
 import '@polymer/iron-selector/iron-selector.js';
 import '@polymer/iron-ajax/iron-ajax.js';
+import '@polymer/app-storage/app-indexeddb-mirror/app-indexeddb-mirror.js';
 import './my-icons.js';
 import './shared-styles.js';
 
@@ -89,7 +90,7 @@ class MyApp extends PolymerElement {
       <iron-ajax
         auto
         url="[[endpoint]]"
-        last-response="{{data}}"
+        last-response="{{liveData}}"
         handle-as="json"
         debounce-duration="300">
     </iron-ajax>
@@ -99,6 +100,17 @@ class MyApp extends PolymerElement {
 
       <app-route route="{{route}}" pattern="[[rootPath]]:page" data="{{routeData}}" tail="{{subroute}}">
       </app-route>
+      
+      <app-indexeddb-mirror
+          key="reads"
+          persisted-data="{{reads}}">
+        </app-indexeddb-mirror>
+
+      <app-indexeddb-mirror
+          key="data"
+          data="[[liveData]]"
+          persisted-data="{{data}}">
+        </app-indexeddb-mirror>
 
       <app-drawer-layout fullbleed="" force-narrow narrow="{{narrow}}">
         <!-- Drawer content -->
@@ -130,7 +142,10 @@ class MyApp extends PolymerElement {
               active-post="{{activePost}}"></my-view1>
             <my-view2 
               name="post"
-              active-post="[[activePost]]"></my-view2>
+              items="[[items]]"
+              route="[[subroute]]"
+              on-need-data="_giveData"
+              data="[[activePost]]"></my-view2>
             <my-view3 name="view3"></my-view3>
             <my-view404 name="view404"></my-view404>
           </iron-pages>
@@ -151,6 +166,10 @@ class MyApp extends PolymerElement {
       endpoint: {
         type: String,
         value: 'http://localhost:3300'
+      },
+      reads: {
+        type: Array,
+        value: []
       }
     };
   }
@@ -162,6 +181,22 @@ class MyApp extends PolymerElement {
       '_getFeatured(items.*, userReads)',
       '_getLatest(items.*, featuredArticles)'
     ];
+  }
+
+  _giveData({detail: slug}){
+    if(!slug || !this.items) return;
+    
+    const item = this.items.find(item => {
+      let url = decodeURIComponent(
+          item.link._text.replace("https://blogs.oracle.com/", "")
+      );
+      return url === slug
+    })
+
+    //lets check if we found this post
+    if(item){
+      this.activePost = item;
+    }
   }
 
   _routePageChanged(page) {
@@ -225,6 +260,7 @@ class MyApp extends PolymerElement {
     if(!this.items) return;
 
     let featured = []
+    //here we could call our reccomendation engine
 
     if(userReads.length == 0){
       //If user never read a story

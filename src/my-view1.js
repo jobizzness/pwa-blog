@@ -174,6 +174,8 @@ class MyView1 extends PolymerElement {
         }
       </style>
 
+      
+
       <app-hero class="content">
         <div class="carousel">
           <div class="glide">
@@ -261,7 +263,7 @@ class MyView1 extends PolymerElement {
                     <span class="article-autor--author">[[_formatAuthor(article)]]</span>
                   </a>
                   <span class="flex"></span>
-                  <span class="article-item--date">January 28, 2018</span>
+                  <span class="article-item--date">[[_formatDate(article.pubDate._text)]]</span>
                 </footer>
               </article-info>
             </article-item>
@@ -305,7 +307,7 @@ class MyView1 extends PolymerElement {
                   <span class="article-autor--author">[[_formatAuthor(article)]]</span>
                 </a>
                 <span class="flex"></span>
-                <span class="article-item--date">January 28, 2018</span>
+                <span class="article-item--date">[[_formatDate(article.pubDate._text)]]</span>
               </footer>
             </article-item>
           </template>
@@ -347,9 +349,11 @@ class MyView1 extends PolymerElement {
     }
   }
 
+
   lastestChanged(data){
     console.log(data)
   }
+
   connectedCallback(){
     super.connectedCallback()
 
@@ -365,10 +369,13 @@ class MyView1 extends PolymerElement {
     return (!data || !data.length > 0) ? [{}, {}, {}, {}] : [];
   }
 
-  
+  _formatDate(date){
+    console.log(date)
+    return date;
+  }
   _formatURL(link){
     if(!link) return;
-    return link.replace("https://blogs.oracle.com", "/post");;
+    return link.replace("https://blogs.oracle.com", "/post");
   }
 
   _selectArticle(e){

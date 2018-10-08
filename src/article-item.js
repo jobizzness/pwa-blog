@@ -30,6 +30,7 @@ $_documentContainer.innerHTML = //html
             article-item>article-figure iron-image{
               width: 100%;
               height: 100%;
+              background-color: #eee;
             }
             article-item .article-item--excerpt{
               margin-bottom: 12px;
@@ -42,7 +43,7 @@ $_documentContainer.innerHTML = //html
             }
             article-item .article-item--title{
               font-weight: 400;
-              font-size: 21px;
+              font-size: 1.4rem;
               line-height: 1.2;
               height: 55px;
               text-overflow: ellipsis;

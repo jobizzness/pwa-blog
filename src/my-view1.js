@@ -23,22 +23,25 @@ class MyView1 extends PolymerElement {
           display: block;
         }
         app-hero{
-          min-height: 350px;
+          display: block;
+        }
+        .carousel{
+          margin-top: 3em;
+          margin-bottom: 3em;
+          height: 100%;
+          width: 100%;
+          height: 400px;
           background-color: #eee;
           width: 100%;
           display: block;
           border-radius: 10px;
           box-shadow: 0px 22px 50px -24px rgba(0,0,0,0.6);
-        }
-        .carousel{
-          margin-top: 1em;
-          margin-bottom: 3em;
-          height: 100%;
-          width: 100%;
-          min-height: 350px;
+          position: relative;
+          overflow: hidden;
         }
         .glide__slides{
           height: 400px;
+          margin-top: 0;
         }
         .glide__track{
           height: 400px;
@@ -46,6 +49,7 @@ class MyView1 extends PolymerElement {
         .glide__slide iron-image{
           width: 100%;
           height: 100%;
+          background-color: #eee;
         }
         .grid{
           display: grid;
@@ -78,7 +82,7 @@ class MyView1 extends PolymerElement {
           justify-content: center;
           align-items: center;
           flex-direction: column;
-          padding: 5em 1em;
+          padding: 5em 2em;
         }
         .subscribe-inner h1{
           color: white;
@@ -87,7 +91,14 @@ class MyView1 extends PolymerElement {
         }
         .subscribe-inner p{
           max-width: 450px;
-          color: white;
+          color: #ffffffcc;
+          font-size: 1rem;
+          text-align: center;
+        }
+        .subscribe-inner form, 
+        .subscribe-inner input{
+          width: 100%;
+          max-width: 468px;
         }
         .subscribe-inner input{
           border: #e8e8e8;
@@ -98,8 +109,7 @@ class MyView1 extends PolymerElement {
           margin-bottom: 50px;
           border-color: #eee;
           padding: 1em 16px;
-          width: 100vw;
-          max-width: 468px;
+          width: 100%;
           outline: none;
           font-size: 1rem;
         }
@@ -121,6 +131,7 @@ class MyView1 extends PolymerElement {
           color: white;
           padding: 16px;
           max-width: 600px;
+          z-index: 3;
         }
         .glide__slide h1{
           font-size: 1.5em;
@@ -128,9 +139,38 @@ class MyView1 extends PolymerElement {
           line-height: 1;
         }
         .glide__slide p{
-          font-size: 1em;
-          font-weight: 400;
+          font-size: 14px;
+          font-weight: 100;
           line-height: 1;
+          letter-spacing: 1px;
+          color: #ffffffbf;
+        }
+        .overlay{
+          position: absolute;
+          bottom: 0;
+          height: 140px;
+          width: 100%;
+          background-color: #52545f8f;
+          z-index: 1;
+        }
+        @media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
+        /* Styles */
+        .grid--three{
+          grid-template-columns: repeat(2,1fr);
+        }
+        .grid--two{
+          grid-template-columns: repeat(2,1fr);
+        }
+        }
+
+        /* Smartphones (portrait and landscape) ----------- */
+        @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+          .grid--three{
+            grid-template-columns: repeat(1,1fr);
+          }
+          .grid--two{
+            grid-template-columns: repeat(1,1fr);
+          }
         }
       </style>
 
@@ -140,46 +180,45 @@ class MyView1 extends PolymerElement {
             <div class="glide__track" data-glide-el="track">
               <ul class="glide__slides">
                 <li class="glide__slide">
+                  <div class="overlay"></div>
                   <iron-image 
                     sizing="cover" 
                     preload 
                     src="https://cdn.app.compendium.com/uploads/user/e7c690e8-6ff9-102a-ac6d-e4aebca50425/a3e7d69b-5a30-44b2-af3c-3f7ef2882cd6/File/8860e101166e082a58fb0ade5c362401/dba_banner_tob.jpg"></iron-image>
                   <div class="slider-slide--content">
-                    <a href="https://blogs.oracle.com/a-veteran-dba%E2%80%99s-insights-on-oracle%E2%80%99s-new-autonomous-data-warehouse">
+                    <a href="#">
                       <h1>A Veteran DBA’s Insights on Oracle’s New Autonomous Data Warehouse</h1>
                     </a>
                     <p>Oracle Autonomous Data Warehouse delivers on its promise of automating much of the manual work that has long gone into running a data warehouse.</p>    		
                   </div>
                 </li>
                 <li class="glide__slide">
+                  <div class="overlay"></div>
                   <iron-image 
                     sizing="cover" 
                     preload 
                     src="https://cdn.app.compendium.com/uploads/user/e7c690e8-6ff9-102a-ac6d-e4aebca50425/a3e7d69b-5a30-44b2-af3c-3f7ef2882cd6/File/bd0b35989afdd4961d5ba41cf1292cd3/1600x600cloud_fest_2018_blog.jpg"></iron-image>
                   <div class="slider-slide--content">
-                    <a href="https://blogs.oracle.com/a-veteran-dba%E2%80%99s-insights-on-oracle%E2%80%99s-new-autonomous-data-warehouse">
+                    <a href="#">
                       <h1>A Veteran DBA’s Insights on Oracle’s New Autonomous Data Warehouse</h1>
                     </a>
                     <p>Oracle Autonomous Data Warehouse delivers on its promise of automating much of the manual work that has long gone into running a data warehouse.</p>    		
                   </div>
                 </li>
                 <li class="glide__slide">
+                  <div class="overlay"></div>
                   <iron-image 
                     sizing="cover" 
                     preload 
                     src="https://cdn.app.compendium.com/uploads/user/e7c690e8-6ff9-102a-ac6d-e4aebca50425/a3e7d69b-5a30-44b2-af3c-3f7ef2882cd6/File/94cec0b1f82a6d21e75b8ceff56db657/java_developer_banner.jpg"></iron-image>
                   <div class="slider-slide--content">
-                    <a href="https://blogs.oracle.com/a-veteran-dba%E2%80%99s-insights-on-oracle%E2%80%99s-new-autonomous-data-warehouse">
+                    <a href="#">
                       <h1>A Veteran DBA’s Insights on Oracle’s New Autonomous Data Warehouse</h1>
                     </a>
                     <p>Oracle Autonomous Data Warehouse delivers on its promise of automating much of the manual work that has long gone into running a data warehouse.</p>    		
                   </div>
                 </li>
               </ul>
-            </div>
-            <div class="glide__arrows" data-glide-el="controls">
-              <button class="glide__arrow glide__arrow--left" data-glide-dir="<">prev</button>
-              <button class="glide__arrow glide__arrow--right" data-glide-dir=">">next</button>
             </div>
           </div>
         </div>
@@ -296,7 +335,7 @@ class MyView1 extends PolymerElement {
       type: 'carousel',
       startAt: 0,
       perView: 1,
-      autoplay: 4000
+      //autoplay: 4000
     }).mount()
   }
 

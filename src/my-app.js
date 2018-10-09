@@ -93,7 +93,7 @@ class MyApp extends PolymerElement {
         last-response="{{liveData}}"
         handle-as="json"
         debounce-duration="300">
-    </iron-ajax>
+      </iron-ajax>
 
       <app-location route="{{route}}" url-space-regex="^[[rootPath]]">
       </app-location>
@@ -165,7 +165,7 @@ class MyApp extends PolymerElement {
       subroute: Object,
       endpoint: {
         type: String,
-        value: 'http://localhost:3300'
+        value: '/data'
       },
       reads: {
         type: Array,
@@ -199,30 +199,6 @@ class MyApp extends PolymerElement {
     }
   }
 
-  _routePageChanged(page) {
-     // Show the corresponding page according to the route.
-     //
-     // If no page was found in the route data, page will be an empty string.
-     // Show 'view1' in that case. And if the page doesn't exist, show 'view404'.
-    if (!page) {
-      this.page = 'home';
-    } else if (['home', 'post', 'view3'].indexOf(page) !== -1) {
-      this.page = page;
-    } else {
-      this.page = 'view404';
-    }
-
-    // Close a non-persistent drawer when the page & route are changed.
-    if (!this.$.drawer.persistent) {
-      this.$.drawer.close();
-    }
-  }
-
-  ready(){
-    super.ready();
-
-  }
-
   _dataChanged(data){
     if (!data || !data.rss.channel) return;
       
@@ -251,6 +227,12 @@ class MyApp extends PolymerElement {
     return false;
   }
 
+  _onUserReadPost(post){
+    if(post && !this._itemExists(post, this.reads)){
+      this.push('reads', post);
+    }
+  }
+
   /**
     * @desc Based on user reads, feature 4 posts
     * @param items - the posts from our data
@@ -272,6 +254,25 @@ class MyApp extends PolymerElement {
 
   }
 
+  _routePageChanged(page) {
+    // Show the corresponding page according to the route.
+    //
+    // If no page was found in the route data, page will be an empty string.
+    // Show 'view1' in that case. And if the page doesn't exist, show 'view404'.
+    if (!page) {
+      this.page = 'home';
+    } else if (['home', 'post', 'view3'].indexOf(page) !== -1) {
+      this.page = page;
+    } else {
+      this.page = 'view404';
+    }
+
+    // Close a non-persistent drawer when the page & route are changed.
+    if (!this.$.drawer.persistent) {
+      this.$.drawer.close();
+    }
+  }
+  
   _pageChanged(page) {
     // Import the page component on demand.
     //

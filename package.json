@@ -24,13 +24,11 @@
     "@polymer/iron-image": "^3.0.1",
     "@polymer/iron-media-query": "^3.0.0-pre.15",
     "@polymer/iron-pages": "^3.0.0-pre.15",
+    "@polymer/iron-scroll-threshold": "^3.0.1",
     "@polymer/iron-selector": "^3.0.0-pre.15",
     "@polymer/paper-icon-button": "^3.0.0-pre.15",
     "@polymer/polymer": "^3.0.0",
-    "@webcomponents/webcomponentsjs": "^2.0.0",
-    "express": "^4.16.3",
-    "node-fetch": "^2.2.0",
-    "xml-js": "^1.6.8"
+    "@webcomponents/webcomponentsjs": "^2.0.0"
   },
   "devDependencies": {
     "polymer-cli": "^1.7.1",

@@ -178,10 +178,11 @@ class MyView1 extends PostBehavior(PolymerElement) {
           .overlay{
             height: 195px;
           }
+          .carousel{
+            border-radius: 0;
+          }
         }
       </style>
-
-      
 
       <app-hero class="content">
         <div class="carousel">

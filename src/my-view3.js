@@ -9,12 +9,14 @@
  */
 
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
+import { PostBehavior } from './post-behavior.js';
+import './article-item.js';
 import './shared-styles.js';
 
-class MyView3 extends PolymerElement {
+class MyView3 extends PostBehavior(PolymerElement) {
   static get template() {
     return html`
-      <style include="shared-styles">
+      <style include="shared-styles article-item">
         :host {
           display: block;
 
@@ -22,12 +24,44 @@ class MyView3 extends PolymerElement {
         }
       </style>
 
-      <div class="card">
-        <div class="circle">3</div>
-        <h1>View Three</h1>
-        <p>Modus commodo minimum eum te, vero utinam assueverit per eu.</p>
-        <p>Ea duis bonorum nec, falli paulo aliquid ei eum.Has at minim mucius aliquam, est id tempor laoreet.Pro saepe pertinax ei, ad pri animal labores suscipiantur.</p>
-      </div>
+      <section class="article-section content">
+        <header class="section-header">
+          <h1 class="section-heading">Your Reads</h1>
+        </header>
+        <article-listing class="grid grid--three">
+          <template is="dom-repeat" items="[[reads]]" as="article">
+            <article-item image-only data="[[article]]" on-click="_selectArticle">
+              <article-figure>
+                <a href$="[[_formatURL(article.link._text)]]">
+                  <iron-image 
+                    sizing="cover" 
+                    preload 
+                    src="[[article.enclosure._attributes.url]]"></iron-image>
+                </a>
+              </article-figure>
+              <article-info>
+                <a href$="[[_formatURL(article.link._text)]]">
+                  <h1 class="article-item--title">[[article.title._text]]</h1>
+                </a>
+                <p class="article-item--excerpt">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut viverra nisl rutrum, pretium lectus nec, sagittis dolor....</p>
+                <footer class="article-item--footer">
+                  <div class="article-author--avatar">
+                    <img src=""> 
+                  </div>
+                  <a href$="[[_formatURL(article.link._text)]]">
+                    <span class="article-autor--author">[[_formatAuthor(article)]]</span>
+                  </a>
+                  <span class="flex"></span>
+                  <span class="article-item--date">[[_formatDate(article.pubDate._text)]]</span>
+                </footer>
+              </article-info>
+            </article-item>
+          </template>
+        </article-listing>
+        <div hidden$="[[reads]]">
+          You have not read any article!
+        </div>
+      </section>
     `;
   }
 }

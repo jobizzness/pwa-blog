@@ -52,15 +52,6 @@ class MyView1 extends PostBehavior(PolymerElement) {
           height: 100%;
           background-color: #eee;
         }
-        .grid{
-          display: grid;
-        }
-        .grid--three{
-          grid-template-columns: repeat(3,1fr);
-        }
-        .grid--two{
-          grid-template-columns: repeat(2,1fr);
-        }
         .section-header{
           font-size: 1.8rem;
           margin: 0;
@@ -153,34 +144,6 @@ class MyView1 extends PostBehavior(PolymerElement) {
           width: 100%;
           background-color: #52545f8f;
           z-index: 1;
-        }
-        @media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
-        /* Styles */
-        .grid--three{
-          grid-template-columns: repeat(2,1fr);
-        }
-        .grid--two{
-          grid-template-columns: repeat(2,1fr);
-        }
-        }
-
-        /* Smartphones (portrait and landscape) ----------- */
-        @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
-          .grid--three{
-            grid-template-columns: repeat(1,1fr);
-          }
-          .grid--two{
-            grid-template-columns: repeat(1,1fr);
-          }
-          .slider-slide--content{
-            max-width: 350px;
-          }
-          .overlay{
-            height: 195px;
-          }
-          .carousel{
-            border-radius: 0;
-          }
         }
       </style>
 

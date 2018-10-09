@@ -145,8 +145,12 @@ class MyApp extends PolymerElement {
               items="[[items]]"
               route="[[subroute]]"
               on-need-data="_giveData"
+              on-read-post="_onUserReadPost"
               data="[[activePost]]"></my-view2>
-            <my-view3 name="view3"></my-view3>
+            <my-view3 
+              reads="[[reads]]"
+              active-post="{{activePost}}"
+              name="reads"></my-view3>
             <my-view404 name="view404"></my-view404>
           </iron-pages>
         </app-header-layout>
@@ -227,7 +231,7 @@ class MyApp extends PolymerElement {
     return false;
   }
 
-  _onUserReadPost(post){
+  _onUserReadPost({detail: post}){
     if(post && !this._itemExists(post, this.reads)){
       this.push('reads', post);
     }
@@ -261,7 +265,7 @@ class MyApp extends PolymerElement {
     // Show 'view1' in that case. And if the page doesn't exist, show 'view404'.
     if (!page) {
       this.page = 'home';
-    } else if (['home', 'post', 'view3'].indexOf(page) !== -1) {
+    } else if (['home', 'post', 'reads'].indexOf(page) !== -1) {
       this.page = page;
     } else {
       this.page = 'view404';
@@ -272,7 +276,7 @@ class MyApp extends PolymerElement {
       this.$.drawer.close();
     }
   }
-  
+
   _pageChanged(page) {
     // Import the page component on demand.
     //
@@ -285,7 +289,7 @@ class MyApp extends PolymerElement {
       case 'post':
         import('./my-view2.js');
         break;
-      case 'view3':
+      case 'reads':
         import('./my-view3.js');
         break;
       case 'view404':

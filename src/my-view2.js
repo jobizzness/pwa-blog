@@ -11,6 +11,7 @@
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-image/iron-image.js';
 import './shared-styles.js';
+import '@polymer/iron-scroll-threshold/iron-scroll-threshold.js';
 import {PostBehavior} from './post-behavior.js';
 
 class MyView2 extends PostBehavior(PolymerElement) {
@@ -72,6 +73,12 @@ class MyView2 extends PostBehavior(PolymerElement) {
         
         <app-route route="[[route]]" pattern="/:slug" data="{{routeData}}" tail="{{subroute}}">
       </app-route>
+        
+      <iron-scroll-threshold 
+        id="scollThreshold" 
+        scroll-target="document"
+        lowerThreshold="60"
+        on-lower-threshold="readPost"></iron-scroll-threshold>
 
         <div class="wrapper card">
             <header class="item-gallery">
@@ -122,6 +129,15 @@ class MyView2 extends PostBehavior(PolymerElement) {
         }
     }
 
+    readPost(){
+        setTimeout(() => {
+            if(this.post){
+                this.dispatchEvent(new CustomEvent('read-post', { detail: this.post }))
+            }
+            this.$.scollThreshold.clearTriggers();
+        }, 1000);
+    }
+    
   _postChanged(newPost, oldPost){
     //scroll top
     window.scrollTo(0, 0)

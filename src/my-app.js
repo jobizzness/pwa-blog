@@ -21,7 +21,7 @@ import '@polymer/app-route/app-route.js';
 import '@polymer/iron-pages/iron-pages.js';
 import '@polymer/iron-selector/iron-selector.js';
 import '@polymer/iron-ajax/iron-ajax.js';
-import '@polymer/app-storage/app-indexeddb-mirror/app-indexeddb-mirror.js';
+import '@polymer/app-storage/app-localstorage/app-localstorage-document.js';
 import './my-icons.js';
 import './shared-styles.js';
 
@@ -90,28 +90,33 @@ class MyApp extends PolymerElement {
       <iron-ajax
         auto
         url="[[endpoint]]"
-        last-response="{{liveData}}"
+        last-response="{{data}}"
         handle-as="json"
         debounce-duration="300">
       </iron-ajax>
 
-      <app-location route="{{route}}" url-space-regex="^[[rootPath]]">
+      <app-location 
+        route="{{route}}" 
+        url-space-regex="^[[rootPath]]">
       </app-location>
 
-      <app-route route="{{route}}" pattern="[[rootPath]]:page" data="{{routeData}}" tail="{{subroute}}">
+      <app-route 
+        route="{{route}}" 
+        pattern="[[rootPath]]:page" 
+        data="{{routeData}}" 
+        tail="{{subroute}}">
       </app-route>
       
-      <app-indexeddb-mirror
-          key="reads"
-          persisted-data="{{reads}}">
-        </app-indexeddb-mirror>
+      <app-localstorage-document
+        key="reads"
+        persisted-data="{{reads}}">
+      </app-localstorage-document>
 
-      <app-indexeddb-mirror
-          key="data"
-          data="[[liveData]]"
-          persisted-data="{{data}}">
-        </app-indexeddb-mirror>
-
+      <app-localstorage-document 
+        key="data" 
+        data="{{data}}">
+      </app-localstorage-document>
+          
       <app-drawer-layout fullbleed="" force-narrow narrow="{{narrow}}">
         <!-- Drawer content -->
         <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]" align="right" opened>
@@ -174,6 +179,12 @@ class MyApp extends PolymerElement {
       reads: {
         type: Array,
         value: []
+      },
+      data: {
+        type: Object,
+        value: {
+          rss:{}
+        }
       }
     };
   }

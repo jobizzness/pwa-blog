@@ -18,7 +18,7 @@ class MyView2 extends PostBehavior(PolymerElement) {
 
   static get template() {
     return html`
-            <style include="shared-styles">
+        <style include="shared-styles">
             :host {
                 display: block;
                 padding: 1em 16px;
@@ -130,14 +130,15 @@ class MyView2 extends PostBehavior(PolymerElement) {
     }
 
     readPost(){
+        console.info('you read this post')
         setTimeout(() => {
-            if(this.post){
-                this.dispatchEvent(new CustomEvent('read-post', { detail: this.post }))
+            if(this.data){
+                this.dispatchEvent(new CustomEvent('read-post', { detail: this.data }))
             }
             this.$.scollThreshold.clearTriggers();
-        }, 1000);
+        }, 100);
     }
-    
+
   _postChanged(newPost, oldPost){
     //scroll top
     window.scrollTo(0, 0)

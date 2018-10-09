@@ -16,7 +16,8 @@ exports.data = functions.https.onRequest((req, res) => {
         .then(res => res.text())
         .then(body => {
             result = convert.xml2json(body, { compact: true, spaces: 4 });
-            res.send(result)
+            return res.send(result)
 
-        });
+        })
+        .catch();
 });
